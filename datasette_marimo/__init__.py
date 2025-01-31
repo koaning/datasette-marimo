@@ -3,8 +3,6 @@ from datasette import hookimpl, Response
 import requests as rq
 import marimo as mo
 from yarl import URL
-import traitlets
-import pathlib
 import polars as pl
 import json
 from functools import cached_property, lru_cache
