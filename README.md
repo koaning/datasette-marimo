@@ -1,36 +1,28 @@
-# datasette-modatasette
+# datasette-marimo
 
-[![PyPI](https://img.shields.io/pypi/v/datasette-modatasette.svg)](https://pypi.org/project/datasette-modatasette/)
-[![Changelog](https://img.shields.io/github/v/release/koaning/datasette-modatasette?include_prereleases&label=changelog)](https://github.com/koaning/datasette-modatasette/releases)
-[![Tests](https://github.com/koaning/datasette-modatasette/actions/workflows/test.yml/badge.svg)](https://github.com/koaning/datasette-modatasette/actions/workflows/test.yml)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/koaning/datasette-modatasette/blob/main/LICENSE)
-
-Marimo attached to your datasette
+Use [marimo](https://marimo.io) inside of Datasette.
 
 ## Installation
 
 Install this plugin in the same environment as Datasette.
-```bash
-datasette install datasette-modatasette
+
 ```
+uv pip install datasette-marimo
+datasette install datasette-marimo
+```
+
 ## Usage
 
-Usage instructions go here.
+When you run a datasette server, go to "/marimo" in the browser. From there you get Marimo running in WASM with some helper tools to grab data our of datasette. The benefit is that you can run all sorts of visualisation tools and machine learning on the data without having to install any software on your local machine.
 
-## Development
+There is one big downside: refresh the page and you loose progress. Make sure you download beforehand. 
 
-To set up this plugin locally, first checkout the code. Then create a new virtual environment:
-```bash
-cd datasette-modatasette
-python -m venv venv
-source venv/bin/activate
+Note, there are also some helper functions available. 
+
+```python
+from datasette_marimo import Datasette
+
+# Two different methods to get your data as a Polars DataFrame
+df = Datasette().get_polars(database="sqlite", table="chickweight")
+df = Datasette().sql_polars(database="sqlite", sql="select * from chickweight")
 ```
-Now install the dependencies and test dependencies:
-```bash
-pip install -e '.[test]'
-```
-To run the tests:
-```bash
-python -m pytest
-```
-# datasette-marimo
