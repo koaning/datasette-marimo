@@ -1,6 +1,4 @@
-from datasette import hookimpl, Response
-
-import html
+from datasette import Response, hookimpl
 
 
 async def marimo(request):
