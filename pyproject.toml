@@ -14,9 +14,14 @@ dependencies = [
     "datasette", "marimo", "yarl", "polars", "requests"
 ]
 
+
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
 
 [project.urls]
 Homepage = "https://github.com/koaning/datasette-marimo"

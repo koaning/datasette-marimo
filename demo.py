@@ -1,16 +1,31 @@
 import marimo
 
-__generated_with = "0.10.18"
+__generated_with = "0.10.19"
 app = marimo.App()
 
 
 @app.cell
-def _(DATASETTE_HOST, pl, rq):
+def _(Datasette):
+    df = Datasette().get_polars(database="sqlite", table="chickweight")
+
+    df.select("weight", "time", "diet")
+    return (df,)
+
+
+@app.cell
+def _():
+    import marimo as mo
+    import requests as rq
+    import marimo as mo
+    from yarl import URL
+    import polars as pl
+    import json
     from functools import cached_property, lru_cache
 
+
     class Datasette:
-        def __init__(self, url):
-            self.url = url
+        def __init__(self, url=None):
+            self.url = url if url else marimo_host()
 
         @cached_property
         def databases(self):
@@ -25,74 +40,27 @@ def _(DATASETTE_HOST, pl, rq):
             return [_["name"] for _ in resp.json()["tables"]]
 
         def get_polars(self, database, table): 
-            return pl.read_csv(f"{self.url}/{database}/{table}.csv?_dl=on&_stream=on&_size=max")
+            return self.sql_polars(database, sql=f"select * from {table}")
 
-    Datasette(DATASETTE_HOST).tables("sqlite")
-    return Datasette, cached_property, lru_cache
-
-
-@app.cell
-def _(widget):
-    DATASETTE_HOST = widget.datasette_host
-    return (DATASETTE_HOST,)
+        def sql_polars(self, database, sql):
+            url = (URL(self.url) / "sqlite.json").with_query(sql=sql, _shape="array", _nl="on", _size="max")
+            return pl.DataFrame([json.loads(_) for _ in rq.get(f"{url}").text.split("\n")])
 
 
-@app.cell
-def _(URLWidget, mo):
-    widget = mo.ui.anywidget(URLWidget())
-    widget
-    return (widget,)
-
-
-@app.cell
-def _():
-    import marimo as mo
-    from yarl import URL
-    import anywidget
-    import traitlets
-    import pathlib
-    import polars
-
-    class URLWidget(anywidget.AnyWidget):
-        # Python-side trait to store the URL
-        current_url = traitlets.Unicode("").tag(sync=True)
-        _esm = """
-            function render({model, el}) {
-                console.log("loaded")
-                model.set('current_url', window.location.href);
-                model.save_changes();
-            }
-
-            export default {render}
-        """
-
-        @property
-        def datasette_host(self):
-            url = URL(self.current_url)
-            return f"{url.scheme}://{url.authority}"
-
-
-    def datasette_host(): 
-        widget = mo.ui.anywidget(URLWidget())
-        print(widget.current_url)
-        url = URL(widget.current_url)
+    def marimo_host(): 
+        url = URL(str(mo.notebook_location()))
         return f"{url.scheme}://{url.authority}"
     return (
+        Datasette,
         URL,
-        URLWidget,
-        anywidget,
-        datasette_host,
+        cached_property,
+        json,
+        lru_cache,
+        marimo_host,
         mo,
-        pathlib,
-        polars,
-        traitlets,
+        pl,
+        rq,
     )
-
-
-@app.cell
-def _():
-    import requests as rq
-    return (rq,)
 
 
 @app.cell
