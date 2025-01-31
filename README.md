@@ -1,8 +1,10 @@
-# datasette-marimo
+<img src="imgs/logo.png" alt="plugin logo" width="125" align="right"/>
 
-Use [marimo](https://marimo.io) inside of Datasette.
+### datasette-marimo
 
-## Installation
+> Use [marimo](https://marimo.io) inside of [datasette](https://datasette.io/).
+
+## Install
 
 Install this plugin in the same environment as Datasette.
 
