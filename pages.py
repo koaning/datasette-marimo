@@ -22,7 +22,7 @@ def _(mo):
 
 @app.cell
 def _(Datasette):
-    datasette = Datasette("https://calmcode-datasette.fly.dev/")
+    datasette = Datasette("https://calmcode-datasette.fly.dev")
     return (datasette,)
 
 
