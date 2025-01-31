@@ -1,6 +1,6 @@
 [project]
 name = "datasette-marimo"
-version = "0.1"
+version = "0.1.1"
 description = "Marimo attached to your datasette"
 readme = "README.md"
 authors = [{name = "Vincent D. Warmerdam"}]
