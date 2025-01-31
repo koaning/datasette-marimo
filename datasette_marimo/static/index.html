@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        var scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          var element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((entries) => {
+          setHeight();
+        });
+        resizeObserver.observe(obj.contentWindow.document.body);
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <marimo-mode data-mode='edit' hidden></marimo-mode>
+    <marimo-version data-version='0.10.18' hidden></marimo-version>
+    <marimo-user-config data-config='{"completion": {"activate_on_typing": true, "copilot": false}, "display": {"default_width": "compact", "code_editor_font_size": 14, "dataframes": "rich", "cell_output": "below", "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"preset": "default", "overrides": {}}, "runtime": {"auto_instantiate": true, "auto_reload": "off", "on_cell_change": "autorun"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "package_management": {"manager": "pip"}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}}' data-overrides='{}' hidden></marimo-user-config>
+    <marimo-app-config data-config='{"width": "compact"}' hidden></marimo-app-config>
+    <marimo-server-token data-token='123' hidden></marimo-server-token>
+    <title>marimo</title>
+    <script type="module" crossorigin src="./assets/index-CqPQBOGX.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D2VeYVNV.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="" data-show-code="false">import%20marimo%0A%0A__generated_with%20%3D%20%220.10.18%22%0Aapp%20%3D%20marimo.App()%0A%0A%0A%40app.cell%0Adef%20_(DATASETTE_HOST%2C%20pl%2C%20rq)%3A%0A%20%20%20%20from%20functools%20import%20cached_property%2C%20lru_cache%0A%0A%20%20%20%20class%20Datasette%3A%0A%20%20%20%20%20%20%20%20def%20__init__(self%2C%20url)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20self.url%20%3D%20url%0A%0A%20%20%20%20%20%20%20%20%40cached_property%0A%20%20%20%20%20%20%20%20def%20databases(self)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20resp%20%3D%20rq.get(f%22%7Bself.url%7D%2F-%2Fdatabases.json%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B_%5B%22name%22%5D%20for%20_%20in%20resp.json()%5D%0A%0A%20%20%20%20%20%20%20%20%40lru_cache%0A%20%20%20%20%20%20%20%20def%20tables(self%2C%20database)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20database%20not%20in%20self.databases%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValueError(f%22%7Bdatabase%7D%20does%20not%20exist%2C%20options%20are%3A%20%7Bself.databases%7D%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20resp%20%3D%20rq.get(f%22%7Bself.url%7D%2F%7Bdatabase%7D.json%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B_%5B%22name%22%5D%20for%20_%20in%20resp.json()%5B%22tables%22%5D%5D%0A%0A%20%20%20%20%20%20%20%20def%20get_polars(self%2C%20database%2C%20table)%3A%20%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20pl.read_csv(f%22%7Bself.url%7D%2F%7Bdatabase%7D%2F%7Btable%7D.csv%3F_dl%3Don%26_stream%3Don%26_size%3Dmax%22)%0A%0A%20%20%20%20Datasette(DATASETTE_HOST).tables(%22sqlite%22)%0A%20%20%20%20return%20Datasette%2C%20cached_property%2C%20lru_cache%0A%0A%0A%40app.cell%0Adef%20_(widget)%3A%0A%20%20%20%20DATASETTE_HOST%20%3D%20widget.datasette_host%0A%20%20%20%20return%20(DATASETTE_HOST%2C)%0A%0A%0A%40app.cell%0Adef%20_(URLWidget%2C%20mo)%3A%0A%20%20%20%20widget%20%3D%20mo.ui.anywidget(URLWidget())%0A%20%20%20%20widget%0A%20%20%20%20return%20(widget%2C)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20from%20yarl%20import%20URL%0A%20%20%20%20import%20anywidget%0A%20%20%20%20import%20traitlets%0A%20%20%20%20import%20pathlib%0A%20%20%20%20import%20polars%0A%0A%20%20%20%20class%20URLWidget(anywidget.AnyWidget)%3A%0A%20%20%20%20%20%20%20%20%23%20Python-side%20trait%20to%20store%20the%20URL%0A%20%20%20%20%20%20%20%20current_url%20%3D%20traitlets.Unicode(%22%22).tag(sync%3DTrue)%0A%20%20%20%20%20%20%20%20_esm%20%3D%20%22%22%22%0A%20%20%20%20%20%20%20%20%20%20%20%20function%20render(%7Bmodel%2C%20el%7D)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20console.log(%22loaded%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20model.set('current_url'%2C%20window.location.href)%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20model.save_changes()%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20export%20default%20%7Brender%7D%0A%20%20%20%20%20%20%20%20%22%22%22%0A%0A%20%20%20%20%20%20%20%20%40property%0A%20%20%20%20%20%20%20%20def%20datasette_host(self)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20url%20%3D%20URL(self.current_url)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20f%22%7Burl.scheme%7D%3A%2F%2F%7Burl.authority%7D%22%0A%0A%0A%20%20%20%20def%20datasette_host()%3A%20%0A%20%20%20%20%20%20%20%20widget%20%3D%20mo.ui.anywidget(URLWidget())%0A%20%20%20%20%20%20%20%20print(widget.current_url)%0A%20%20%20%20%20%20%20%20url%20%3D%20URL(widget.current_url)%0A%20%20%20%20%20%20%20%20return%20f%22%7Burl.scheme%7D%3A%2F%2F%7Burl.authority%7D%22%0A%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20URL%2C%0A%20%20%20%20%20%20%20%20URLWidget%2C%0A%20%20%20%20%20%20%20%20anywidget%2C%0A%20%20%20%20%20%20%20%20datasette_host%2C%0A%20%20%20%20%20%20%20%20mo%2C%0A%20%20%20%20%20%20%20%20pathlib%2C%0A%20%20%20%20%20%20%20%20polars%2C%0A%20%20%20%20%20%20%20%20traitlets%2C%0A%20%20%20%20)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20requests%20as%20rq%0A%20%20%20%20return%20(rq%2C)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+[project]
+name = "datasette-marimo"
+version = "0.1"
+description = "Marimo attached to your datasette"
+readme = "README.md"
+authors = [{name = "Vincent D. Warmerdam"}]
+license = {text = "Apache-2.0"}
+classifiers=[
+    "Framework :: Datasette",
+    "License :: OSI Approved :: Apache Software License"
+]
+requires-python = ">=3.9"
+dependencies = [
+    "datasette"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/koaning/datasette-marimo"
+Changelog = "https://github.com/koaning/datasette-marimo/releases"
+Issues = "https://github.com/koaning/datasette-marimo/issues"
+CI = "https://github.com/koaning/datasette-marimo/actions"
+
+[project.entry-points.datasette]
+marimo = "datasette_marimo"
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-asyncio"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+
+[tool.setuptools.package-data]
+datasette_marimo = ["static/*", "templates/*"]
