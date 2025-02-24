@@ -5,7 +5,7 @@ static:
 	uv run marimo export html-wasm --output datasette_marimo/static --mode edit demo.py
 	uv run marimo export html-wasm --output docs --mode edit pages.py
 
-pypi:
+pypi: check
 	uv build
 	uv publish
 
