@@ -69,7 +69,6 @@ def _(Datasette):
 def _():
     import marimo as mo
     import requests as rq
-    import marimo as mo
     from yarl import URL
     import polars as pl
     import json
