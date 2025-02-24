@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <!-- Preload is necessary because we show these images when we disconnect from the server,
+    but at that point we cannot load these images from the server -->
+    <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
+    <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
+    <!-- Preload the fonts -->
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="a marimo app" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+
+    <script data-marimo="true">
+      function __resizeIframe(obj) {
+        var scrollbarHeight = 20; // Max between windows, mac, and linux
+
+        function setHeight() {
+          var element = obj.contentWindow.document.documentElement;
+          // If there is no vertical scrollbar, we don't need to resize the iframe
+          if (element.scrollHeight === element.clientHeight) {
+            return;
+          }
+
+          // Create a new height that includes the scrollbar height if it's visible
+          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+
+          // Only update the height if it's different from the current height
+          if (obj.style.height !== `${newHeight}px`) {
+            obj.style.height = `${newHeight}px`;
+          }
+        }
+
+        // Resize the iframe to the height of the content and bottom scrollbar height
+        setHeight();
+
+        // Resize the iframe when the content changes
+        const resizeObserver = new ResizeObserver((entries) => {
+          setHeight();
+        });
+        resizeObserver.observe(obj.contentWindow.document.body);
+      }
+    </script>
+    <marimo-filename hidden>notebook.py</marimo-filename>
+    <marimo-mode data-mode='edit' hidden></marimo-mode>
+    <marimo-version data-version='0.10.19' hidden></marimo-version>
+    <marimo-user-config data-config='{"completion": {"activate_on_typing": true, "copilot": false}, "display": {"code_editor_font_size": 14, "theme": "dark", "cell_output": "below", "dataframes": "rich", "default_width": "medium"}, "formatting": {"line_length": 79}, "keymap": {"preset": "default", "overrides": {}}, "runtime": {"auto_instantiate": true, "auto_reload": "off", "on_cell_change": "autorun"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "package_management": {"manager": "pip"}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}}' data-overrides='{}' hidden></marimo-user-config>
+    <marimo-app-config data-config='{"width": "compact"}' hidden></marimo-app-config>
+    <marimo-server-token data-token='123' hidden></marimo-server-token>
+    <title>marimo</title>
+    <script type="module" crossorigin src="./assets/index-C_IDebto.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DfLILvXO.css">
+  <marimo-wasm hidden=""></marimo-wasm>
+    <script>
+        if (window.location.protocol === 'file:') {
+            alert('Warning: This file must be served by an HTTP server to function correctly.');
+        }
+    </script>
+    
+    <style>
+        #save-button {
+            display: none !important;
+        }
+        #filename-input {
+            display: none !important;
+        }
+    </style>
+    <marimo-code hidden="" data-show-code="false">import%20marimo%0A%0A__generated_with%20%3D%20%220.10.19%22%0Aapp%20%3D%20marimo.App()%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20%20%20%20%20%23%20datasette-marimo%20%0A%0A%20%20%20%20%20%20%20%20This%20page%20gives%20an%20impression%20of%20what%20it%20could%20be%20like%20to%20use%20Marimo%20from%20datasette.%20Right%20now%20it%20just%20points%20to%20a%20public%20instance%2C%20but%20you%20can%20ship%20the%20same%20experience%20from%20within%20datasette.%20%0A%0A%20%20%20%20%20%20%20%20%23%23%20Explore%20the%20mini-API%0A%0A%20%20%20%20%20%20%20%20You%20can%20connect%20to%20an%20instance%20by%20using%20the%20%60Datasette%60%20class.%20This%20is%20provided%20by%20the%20notebook.%0A%20%20%20%20%20%20%20%20%22%22%22%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(Datasette)%3A%0A%20%20%20%20datasette%20%3D%20Datasette(%22https%3A%2F%2Fcalmcode-datasette.fly.dev%22)%0A%20%20%20%20return%20(datasette%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22Just%20to%20mention%20a%20few%20helpers%2C%20we've%20got%20this%20one%20that%20allows%20you%20to%20fetch%20all%20the%20databases%20attached%20to%20the%20datasette%20instance.%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(datasette)%3A%0A%20%20%20%20datasette.databases%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22Given%20a%20database%2C%20you%20can%20also%20check%20for%20all%20the%20available%20tables.%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(datasette)%3A%0A%20%20%20%20datasette.tables(database%3D%22calmcode%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22Spot%20a%20table%20you%20want%20to%20investigate%3F%20You%20can%20run%20SQL%20against%20it!%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(datasette)%3A%0A%20%20%20%20datasette.sql_polars(database%3D%22calmcode%22%2C%20sql%3D%22select%20*%20from%20chickweight%20LIMIT%205%3B%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22There%20is%20also%20a%20helper%20method%20to%20pull%20in%20the%20entire%20table.%20Just%20be%20aware%20that%20this%20can%20get%20slow%20because%20we%20don't%20access%20the%20SQlite%20database%20directly.%20All%20the%20data%20is%20pulled%20in%20via%20the%20JSON%20api.%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(datasette)%3A%0A%20%20%20%20df_chickweight%20%3D%20datasette.get_polars(database%3D%22calmcode%22%2C%20table%3D%22chickweight%22)%0A%20%20%20%20return%20(df_chickweight%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22One%20nice%20thing%20about%20bringing%20the%20data%20into%20a%20polars%20dataframe%20is%20that%20you%20have%20access%20to%20Python%20again%2C%20so%20plotting%20is%20super%20easy%20and%20machine%20learning%20also%20suddenly%20becomes%20an%20option!%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(df_chickweight%2C%20pl)%3A%0A%20%20%20%20p1%20%3D%20df_chickweight.plot.scatter(%22Time%22%2C%20%22weight%22)%0A%20%20%20%20p2%20%3D%20(%0A%20%20%20%20%20%20%20%20df_chickweight%0A%20%20%20%20%20%20%20%20.with_columns(diet%3Dpl.col(%22Diet%22).cast(pl.String()))%0A%20%20%20%20%20%20%20%20.group_by(%22diet%22%2C%20%22Time%22)%0A%20%20%20%20%20%20%20%20.mean()%0A%20%20%20%20%20%20%20%20.plot.line(%22Time%22%2C%20%22weight%22%2C%20color%3D%22diet%22)%0A%20%20%20%20)%0A%20%20%20%20p1%20%2B%20p2%0A%20%20%20%20return%20p1%2C%20p2%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20import%20altair%20%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20requests%20as%20rq%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20from%20yarl%20import%20URL%0A%20%20%20%20import%20polars%20as%20pl%0A%20%20%20%20import%20json%0A%20%20%20%20from%20functools%20import%20cached_property%2C%20lru_cache%0A%0A%0A%20%20%20%20class%20Datasette%3A%0A%20%20%20%20%20%20%20%20def%20__init__(self%2C%20url%3DNone)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20self.url%20%3D%20url%20if%20url%20else%20marimo_host()%0A%0A%20%20%20%20%20%20%20%20%40cached_property%0A%20%20%20%20%20%20%20%20def%20databases(self)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20resp%20%3D%20rq.get(f%22%7Bself.url%7D%2F-%2Fdatabases.json%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B_%5B%22name%22%5D%20for%20_%20in%20resp.json()%5D%0A%0A%20%20%20%20%20%20%20%20%40lru_cache%0A%20%20%20%20%20%20%20%20def%20tables(self%2C%20database)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20database%20not%20in%20self.databases%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValueError(f%22%7Bdatabase%7D%20does%20not%20exist%2C%20options%20are%3A%20%7Bself.databases%7D%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20resp%20%3D%20rq.get(f%22%7Bself.url%7D%2F%7Bdatabase%7D.json%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B_%5B%22name%22%5D%20for%20_%20in%20resp.json()%5B%22tables%22%5D%5D%0A%0A%20%20%20%20%20%20%20%20def%20get_polars(self%2C%20database%2C%20table)%3A%20%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20self.sql_polars(database%2C%20sql%3Df%22select%20*%20from%20%7Btable%7D%22)%0A%0A%20%20%20%20%20%20%20%20def%20sql_polars(self%2C%20database%2C%20sql)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20url%20%3D%20(URL(self.url)%20%2F%20f%22%7Bdatabase%7D.json%22).with_query(sql%3Dsql%2C%20_shape%3D%22array%22%2C%20_nl%3D%22on%22%2C%20_size%3D%22max%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20pl.DataFrame(%5Bjson.loads(_)%20for%20_%20in%20rq.get(f%22%7Burl%7D%22).text.split(%22%5Cn%22)%5D)%0A%0A%0A%20%20%20%20def%20marimo_host()%3A%20%0A%20%20%20%20%20%20%20%20url%20%3D%20URL(str(mo.notebook_location()))%0A%20%20%20%20%20%20%20%20return%20f%22%7Burl.scheme%7D%3A%2F%2F%7Burl.authority%7D%22%0A%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20Datasette%2C%0A%20%20%20%20%20%20%20%20URL%2C%0A%20%20%20%20%20%20%20%20altair%2C%0A%20%20%20%20%20%20%20%20cached_property%2C%0A%20%20%20%20%20%20%20%20json%2C%0A%20%20%20%20%20%20%20%20lru_cache%2C%0A%20%20%20%20%20%20%20%20marimo_host%2C%0A%20%20%20%20%20%20%20%20mo%2C%0A%20%20%20%20%20%20%20%20pl%2C%0A%20%20%20%20%20%20%20%20rq%2C%0A%20%20%20%20)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
