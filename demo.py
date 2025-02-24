@@ -1,15 +1,68 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "drawdata==0.3.7",
+#     "marimo",
+#     "polars==1.22.0",
+#     "quak==0.2.2",
+#     "requests==2.32.3",
+#     "yarl==1.18.3",
+# ]
+# ///
+
 import marimo
 
 __generated_with = "0.10.19"
 app = marimo.App()
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md("""
+    ## Marimo for Datasette
+
+    This notebook runs completely in the frontend via WASM. That means that:
+
+    - you do not have to install anything in order to run Python code against any data that lives in your datasette instance 
+    - all written code is lost when you refresh the page, so make sure you export any milestones that are valuable
+
+    ## Utilities
+
+    This notebooks also features a `Datasette` utility class that makes it easy to fetch data. The following methods are relevant: 
+
+    ```python
+    # Automatically connect to the current datasette instance
+    ds = Datasette()
+
+    # Show all databases in datasette
+    ds.databases
+
+    # Show all datables in a database in datasette
+    ds.tables(database=)
+
+    # Get a table as a polars dataframe (uses the JSON api)
+    ds.get_polars(database=, table=)
+
+    # Use SQL to get the data in the right polars format
+    ds.sql_polars(database=, sql=)
+    ```
+
+    In theory you could also re-use the same class to connect to another datasette instance that is hosted elsewhere. 
+
+    ```python
+    ds = Datasette(url=)
+    ```
+
+    To learn more about Marimo, feel free to explore the [docs](https://docs.marimo.io/getting_started/key_concepts/). 
+    """)
+    return
+
+
 @app.cell
 def _(Datasette):
-    df = Datasette().get_polars(database="sqlite", table="chickweight")
-
-    df.select("weight", "time", "diet")
-    return (df,)
+    ds = Datasette()
+    ds.databases
+    return (ds,)
 
 
 @app.cell
@@ -61,11 +114,6 @@ def _():
         pl,
         rq,
     )
-
-
-@app.cell
-def _():
-    return
 
 
 if __name__ == "__main__":

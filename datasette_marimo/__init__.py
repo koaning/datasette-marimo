@@ -1,9 +1,10 @@
-from datasette import hookimpl, Response
+from datasette import hookimpl, Response, Request
 
 import html
 
 
 async def marimo(request):
+    print(request.path)
     return Response.redirect("/-/static-plugins/datasette_marimo/index.html")
 
 

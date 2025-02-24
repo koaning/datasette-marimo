@@ -11,7 +11,7 @@ classifiers=[
 ]
 requires-python = ">=3.9"
 dependencies = [
-    "datasette", "marimo", "yarl", "polars", "requests"
+    "datasette>=1.0a16", "marimo", "yarl", "polars", "requests"
 ]
 
 
