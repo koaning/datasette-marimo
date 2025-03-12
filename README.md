@@ -13,6 +13,10 @@ uv pip install datasette-marimo
 datasette install datasette-marimo
 ```
 
+## Demo
+
+We host a [demo on Github pages](https://koaning.github.io/datasette-marimo/) that shows what the notebook experience could be like on a datasette server but we also have a [YouTube tutorial](https://youtu.be/32X4OYAxAaQ) that gives more details. 
+
 ## Usage
 
 When you run a datasette server, go to "/marimo" in the browser. From there you get Marimo running in WASM with some helper tools to grab data our of datasette. The benefit is that you can run all sorts of visualisation tools and machine learning on the data without having to install any software on your local machine.
