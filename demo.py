@@ -95,7 +95,7 @@ def _():
             return self.sql_polars(database, sql=f"select * from {table}")
 
         def sql_polars(self, database, sql):
-            url = (URL(self.url) / "sqlite.json").with_query(sql=sql, _shape="array", _nl="on", _size="max")
+            url = (URL(self.url) / f"{database}.json").with_query(sql=sql, _shape="array", _nl="on", _size="max")
             return pl.DataFrame([json.loads(_) for _ in rq.get(f"{url}").text.split("\n")])
 
 
