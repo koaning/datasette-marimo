@@ -13,9 +13,8 @@ clean:
 	rm -rf dist build datasette_marimo.egg-info __pycache__
 
 install:
-	python -m pip install uv 
 	uv venv 
-	uv pip install -e . 
+	uv pip install -e . pytest pytest-asyncio
 	uv run datasette install datasette-marimo
 	make db
 
