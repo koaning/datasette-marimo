@@ -1,0 +1,31 @@
+# Changelog
+
+This file records the notable changes for each release. The format follows
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). The version numbers
+follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+Write every entry in Simplified Technical English. Apply the
+`simplified-technical-english` skill before you add or edit an entry. See
+[AGENTS.md](AGENTS.md) for the rule.
+
+## [0.2.0] - 2026-08-14
+
+### Added
+
+- Add an **Open in marimo** link to Datasette's top-right menu. The link reads the
+  page you came from and prefills the database and table.
+- Connect the notebook through the moutils `DatasetteConnection`, a native marimo
+  SQL connection. The connection appears in the data-sources panel and works with
+  native SQL cells.
+- Add a Database dropdown and a Table dropdown to the notebook. The query updates
+  when you change either one.
+
+### Changed
+
+- Lead the notebook with the moutils connection. Hide the setup and connection
+  code, so the notebook shows the result and not the plumbing.
+- Point the GitHub Pages demo at `https://datasette.exe.xyz`.
+- Slim the plugin dependencies to `datasette`. Each notebook declares its own
+  dependencies in its inline script metadata.
+- Keep the older `Datasette` helper class (`get_polars` / `sql_polars`) for
+  backward compatibility. Fold its code away in the notebook.

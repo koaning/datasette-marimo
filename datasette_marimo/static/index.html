@@ -8,12 +8,12 @@
     <link rel="preload" href="./assets/gradient-yHQUC_QB.png" as="image" />
     <link rel="preload" href="./assets/noise-60BoTA8O.png" as="image" />
     <!-- Preload the fonts -->
-    <link rel="preload" href="./assets/Lora-VariableFont_wght-B2ootaw-.ttf" as="font" crossorigin="anonymous" />
-    <link rel="preload" href="./assets/PTSans-Regular-CxL0S8W7.ttf" as="font" crossorigin="anonymous" />
-    <link rel="preload" href="./assets/PTSans-Bold-D9fedIX3.ttf" as="font" crossorigin="anonymous" />
-    <link rel="preload" href="./assets/FiraMono-Regular-BTCkDNvf.ttf" as="font" crossorigin="anonymous" />
-    <link rel="preload" href="./assets/FiraMono-Medium-DU3aDxX5.ttf" as="font" crossorigin="anonymous" />
-    <link rel="preload" href="./assets/FiraMono-Bold-CLVRCuM9.ttf" as="font" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/Lora-VariableFont_wght-CZceb_kH.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Regular-Bam3NpBI.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/PTSans-Bold-C_DwAp7Z.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Regular-CEsLFVD9.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Medium-D5MAsWEG.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="./assets/FiraMono-Bold-C6PDArdf.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -23,18 +23,22 @@
 
     <script data-marimo="true">
       function __resizeIframe(obj) {
-        var scrollbarHeight = 20; // Max between windows, mac, and linux
+        const scrollbarHeight = 20; // Max between windows, mac, and linux
 
         function setHeight() {
-          var element = obj.contentWindow.document.documentElement;
+          // Guard against race condition where iframe isn't ready
+          if (!obj.contentWindow?.document?.documentElement) {
+            return;
+          }
+          const element = obj.contentWindow.document.documentElement;
           // If there is no vertical scrollbar, we don't need to resize the iframe
           if (element.scrollHeight === element.clientHeight) {
             return;
           }
 
           // Create a new height that includes the scrollbar height if it's visible
-          var hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
-          var newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
+          const hasHorizontalScrollbar = element.scrollWidth > element.clientWidth;
+          const newHeight = element.scrollHeight + (hasHorizontalScrollbar ? scrollbarHeight : 0);
 
           // Only update the height if it's different from the current height
           if (obj.style.height !== `${newHeight}px`) {
@@ -46,21 +50,208 @@
         setHeight();
 
         // Resize the iframe when the content changes
-        const resizeObserver = new ResizeObserver((entries) => {
+        const resizeObserver = new ResizeObserver((_entries) => {
           setHeight();
         });
-        resizeObserver.observe(obj.contentWindow.document.body);
+        // Only observe if iframe content is ready
+        if (obj.contentWindow?.document?.body) {
+          resizeObserver.observe(obj.contentWindow.document.body);
+        }
       }
     </script>
     <marimo-filename hidden>notebook.py</marimo-filename>
-    <marimo-mode data-mode='edit' hidden></marimo-mode>
-    <marimo-version data-version='0.10.19' hidden></marimo-version>
-    <marimo-user-config data-config='{"completion": {"activate_on_typing": true, "copilot": false}, "display": {"dataframes": "rich", "code_editor_font_size": 14, "theme": "dark", "default_width": "medium", "cell_output": "below"}, "formatting": {"line_length": 79}, "keymap": {"preset": "default", "overrides": {}}, "runtime": {"auto_instantiate": true, "auto_reload": "off", "on_cell_change": "autorun"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "package_management": {"manager": "pip"}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}}' data-overrides='{}' hidden></marimo-user-config>
-    <marimo-app-config data-config='{"width": "compact"}' hidden></marimo-app-config>
-    <marimo-server-token data-token='123' hidden></marimo-server-token>
-    <title>marimo</title>
-    <script type="module" crossorigin src="./assets/index-C_IDebto.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DfLILvXO.css">
+    <!-- TODO(Trevor): Legacy, required by VS Code plugin. Remove when plugin is updated (see marimo/server/_templates/template.py) -->
+    <marimo-version data-version="{{ version }}" hidden></marimo-version>
+    <marimo-user-config data-config="{{ user_config }}" hidden></marimo-user-config>
+    <marimo-server-token data-token="{{ server_token }}" hidden></marimo-server-token>
+    <!-- /TODO -->
+    <title>demo</title>
+    <script type="module" crossorigin src="./assets/index-Gv23EHlE.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/preload-helper-TXkS1QI3.js">
+    <link rel="modulepreload" crossorigin href="./assets/objects-BlG0ZrO0.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-LvLJmgfZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-Bj1aDYRI.js">
+    <link rel="modulepreload" crossorigin href="./assets/compiler-runtime-B3qBwwSJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/jsx-runtime-Blw4afVn.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEventListener-C0195JsF.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-DOVIEEPN.js">
+    <link rel="modulepreload" crossorigin href="./assets/precisionRound-i2ImZxgc.js">
+    <link rel="modulepreload" crossorigin href="./assets/defaultLocale-BUCH2FMc.js">
+    <link rel="modulepreload" crossorigin href="./assets/vega-loader.browser-Dun7Qe4B.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-B7U4xkIN.js">
+    <link rel="modulepreload" crossorigin href="./assets/clsx-XrBBnd7s.js">
+    <link rel="modulepreload" crossorigin href="./assets/cn-DYvqRARy.js">
+    <link rel="modulepreload" crossorigin href="./assets/badge-B92a4ePY.js">
+    <link rel="modulepreload" crossorigin href="./assets/button-DDGiD1NW.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-dom-CSu739Rf.js">
+    <link rel="modulepreload" crossorigin href="./assets/fullscreen-CTDqNQr6.js">
+    <link rel="modulepreload" crossorigin href="./assets/menu-items-CCi6aOPm.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BLN8PNJV.js">
+    <link rel="modulepreload" crossorigin href="./assets/createLucideIcon-w-Qo9n0R.js">
+    <link rel="modulepreload" crossorigin href="./assets/check-rzLRd0j9.js">
+    <link rel="modulepreload" crossorigin href="./assets/x-C-Eq0ag8.js">
+    <link rel="modulepreload" crossorigin href="./assets/select-BP75_5jJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/tooltip-4bZlU7jl.js">
+    <link rel="modulepreload" crossorigin href="./assets/use-toast-BwJoaaDM.js">
+    <link rel="modulepreload" crossorigin href="./assets/useEvent-D91BmmQi.js">
+    <link rel="modulepreload" crossorigin href="./assets/invariant-CkiqGLcK.js">
+    <link rel="modulepreload" crossorigin href="./assets/isObject-DvLSfCY5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseFor-DKD1r8uL.js">
+    <link rel="modulepreload" crossorigin href="./assets/merge-_9WLTEyt.js">
+    <link rel="modulepreload" crossorigin href="./assets/zod-H_cgTO0M.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-BWBBpCkT.js">
+    <link rel="modulepreload" crossorigin href="./assets/constants-CDyU_g2F.js">
+    <link rel="modulepreload" crossorigin href="./assets/session-BmukRjSi.js">
+    <link rel="modulepreload" crossorigin href="./assets/Deferred-D2igisxY.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-B-Q7J_6d.js">
+    <link rel="modulepreload" crossorigin href="./assets/uuid-ImXS-885.js">
+    <link rel="modulepreload" crossorigin href="./assets/DeferredRequestRegistry-C8EV1PoE.js">
+    <link rel="modulepreload" crossorigin href="./assets/requests-9-v2bhoi.js">
+    <link rel="modulepreload" crossorigin href="./assets/useLifecycle-lLOBhc-1.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNonce-CbdaHKzX.js">
+    <link rel="modulepreload" crossorigin href="./assets/useTheme-Bxv9B31g.js">
+    <link rel="modulepreload" crossorigin href="./assets/arrays-DbOq36rN.js">
+    <link rel="modulepreload" crossorigin href="./assets/strings--BknHX9C.js">
+    <link rel="modulepreload" crossorigin href="./assets/once-CGKw_kwj.js">
+    <link rel="modulepreload" crossorigin href="./assets/capabilities-DoEg0XwL.js">
+    <link rel="modulepreload" crossorigin href="./assets/createReducer-DGx5Af-C.js">
+    <link rel="modulepreload" crossorigin href="./assets/paths-BKO-pHK6.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-12S8I4CH.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DYEuVkEX.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CiVShZKM.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-BJZAIIze.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-aRc_dRed.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DnjsPBRJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DcwTQG1A.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-CPjTeT8p.js">
+    <link rel="modulepreload" crossorigin href="./assets/dist-DI1-Z60I.js">
+    <link rel="modulepreload" crossorigin href="./assets/stex-FMMSUPAS.js">
+    <link rel="modulepreload" crossorigin href="./assets/toDate-Ct2FT81-.js">
+    <link rel="modulepreload" crossorigin href="./assets/purify.es-CWmnYhGI.js">
+    <link rel="modulepreload" crossorigin href="./assets/cjs-D5tzp-Y6.js">
+    <link rel="modulepreload" crossorigin href="./assets/isSymbol-BT6B8Bon.js">
+    <link rel="modulepreload" crossorigin href="./assets/now-CsYTPAhW.js">
+    <link rel="modulepreload" crossorigin href="./assets/debounce-OiXznToA.js">
+    <link rel="modulepreload" crossorigin href="./assets/database-zap-CKO8g4BU.js">
+    <link rel="modulepreload" crossorigin href="./assets/main-BNL5rxQw.js">
+    <link rel="modulepreload" crossorigin href="./assets/cells-CJLUCcQg.js">
+    <link rel="modulepreload" crossorigin href="./assets/kbd-C5HnBH5U.js">
+    <link rel="modulepreload" crossorigin href="./assets/useInstallPackage-WiYBwhUO.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-dialog-Bb8Lz8ko.js">
+    <link rel="modulepreload" crossorigin href="./assets/dialog-BCVepWLJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDebounce-JDKr83KO.js">
+    <link rel="modulepreload" crossorigin href="./assets/numbers-rmawRqQP.js">
+    <link rel="modulepreload" crossorigin href="./assets/SSRProvider-BUSmWJKC.js">
+    <link rel="modulepreload" crossorigin href="./assets/context-BFPaAUK_.js">
+    <link rel="modulepreload" crossorigin href="./assets/useNumberFormatter-4-Qvf4uR.js">
+    <link rel="modulepreload" crossorigin href="./assets/usePress-5hBv4sjD.js">
+    <link rel="modulepreload" crossorigin href="./assets/input-JxFwu-3G.js">
+    <link rel="modulepreload" crossorigin href="./assets/ImperativeModal-fY-ZfT0b.js">
+    <link rel="modulepreload" crossorigin href="./assets/cell-link-CWQ4BYr-.js">
+    <link rel="modulepreload" crossorigin href="./assets/config-BJVx3eBW.js">
+    <link rel="modulepreload" crossorigin href="./assets/alert-jlwhGxSb.js">
+    <link rel="modulepreload" crossorigin href="./assets/chevron-right-BS_NcSch.js">
+    <link rel="modulepreload" crossorigin href="./assets/dropdown-menu-dHmZR8bI.js">
+    <link rel="modulepreload" crossorigin href="./assets/links-wcQA1Np1.js">
+    <link rel="modulepreload" crossorigin href="./assets/useRunCells-DZ4glj3f.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-Bxb1_Gtw.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-3iHFdt22.js">
+    <link rel="modulepreload" crossorigin href="./assets/copy-icon-neDQUo4Q.js">
+    <link rel="modulepreload" crossorigin href="./assets/RenderHTML-C1rWkDWe.js">
+    <link rel="modulepreload" crossorigin href="./assets/datasource-DbljozeY.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-Rxc-B11B.js">
+    <link rel="modulepreload" crossorigin href="./assets/hat-glasses-BttHlyvs.js">
+    <link rel="modulepreload" crossorigin href="./assets/package-Bxz_8e44.js">
+    <link rel="modulepreload" crossorigin href="./assets/sparkles-DUCpRFlS.js">
+    <link rel="modulepreload" crossorigin href="./assets/MarimoErrorOutput-Cu5WMawt.js">
+    <link rel="modulepreload" crossorigin href="./assets/ErrorBoundary-DzTD8LVq.js">
+    <link rel="modulepreload" crossorigin href="./assets/eye-off-BOZA7gbn.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-cw-CYq4mK5a.js">
+    <link rel="modulepreload" crossorigin href="./assets/tree-actions-BiQ4VzX-.js">
+    <link rel="modulepreload" crossorigin href="./assets/spinner-D-V4psAa.js">
+    <link rel="modulepreload" crossorigin href="./assets/html-to-image-CN9yTa5s.js">
+    <link rel="modulepreload" crossorigin href="./assets/focus-B6HBbAwF.js">
+    <link rel="modulepreload" crossorigin href="./assets/useAsyncData-Bg5iAViP.js">
+    <link rel="modulepreload" crossorigin href="./assets/LazyAnyLanguageCodeMirror-A-Ant1Ad.js">
+    <link rel="modulepreload" crossorigin href="./assets/micromark-factory-space-Dx_STMJD.js">
+    <link rel="modulepreload" crossorigin href="./assets/chunk-5FQGJX7Z-CYQpNADu.js">
+    <link rel="modulepreload" crossorigin href="./assets/markdown-renderer-CzJx-MnJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/command-Dqxie4gq.js">
+    <link rel="modulepreload" crossorigin href="./assets/field-BsxD35VE.js">
+    <link rel="modulepreload" crossorigin href="./assets/popover-Bcz1Zikb.js">
+    <link rel="modulepreload" crossorigin href="./assets/errors-PgHhDa-M.js">
+    <link rel="modulepreload" crossorigin href="./assets/download-DwYUg-o4.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-CH2plyy9.js">
+    <link rel="modulepreload" crossorigin href="./assets/useIframeCapabilities-j6fR_dBA.js">
+    <link rel="modulepreload" crossorigin href="./assets/error-banner-BSxEOIn2.js">
+    <link rel="modulepreload" crossorigin href="./assets/formats-DzmLpc9A.js">
+    <link rel="modulepreload" crossorigin href="./assets/utils-CCTAhdFi.js">
+    <link rel="modulepreload" crossorigin href="./assets/en-US-CjNeNXDB.js">
+    <link rel="modulepreload" crossorigin href="./assets/isValid-D7naiWNs.js">
+    <link rel="modulepreload" crossorigin href="./assets/dates-C2LWzsCZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/extends-B9D0JO9U.js">
+    <link rel="modulepreload" crossorigin href="./assets/emotion-is-prop-valid.esm-lG8j6oqk.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDateFormatter-rtpVEy3J.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-icons.esm-D4GMDkIf.js">
+    <link rel="modulepreload" crossorigin href="./assets/RSPContexts-WiCgGm__.js">
+    <link rel="modulepreload" crossorigin href="./assets/table-D-tcnZC7.js">
+    <link rel="modulepreload" crossorigin href="./assets/ellipsis-C_B8Ux9M.js">
+    <link rel="modulepreload" crossorigin href="./assets/external-link-BOlXZUla.js">
+    <link rel="modulepreload" crossorigin href="./assets/message-circle-dL5J5ZsZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/plus-AgXtozBz.js">
+    <link rel="modulepreload" crossorigin href="./assets/trash-2-72W0TZ3L.js">
+    <link rel="modulepreload" crossorigin href="./assets/react-resizable-panels.browser.esm-Z-MD3n3J.js">
+    <link rel="modulepreload" crossorigin href="./assets/JsonOutput-D2UI9WX5.js">
+    <link rel="modulepreload" crossorigin href="./assets/chart-no-axes-column-iDRxid4h.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-function-DNNRTPQJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/spec-C7opZZRp.js">
+    <link rel="modulepreload" crossorigin href="./assets/column-preview-DREOGG_c.js">
+    <link rel="modulepreload" crossorigin href="./assets/icons-CIPE8AIY.js">
+    <link rel="modulepreload" crossorigin href="./assets/radio-group-CcU5wNVj.js">
+    <link rel="modulepreload" crossorigin href="./assets/floating-outline-DBlzcHYf.js">
+    <link rel="modulepreload" crossorigin href="./assets/switch-OVajJBPR.js">
+    <link rel="modulepreload" crossorigin href="./assets/objectWithoutPropertiesLoose-CboCOq4o.js">
+    <link rel="modulepreload" crossorigin href="./assets/esm-B30N1GS0.js">
+    <link rel="modulepreload" crossorigin href="./assets/readonly-python-code-CYfbPYQ0.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-headphone-DAu6VO6j.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-CJH9JNGH.js">
+    <link rel="modulepreload" crossorigin href="./assets/image-5XI2VU-q.js">
+    <link rel="modulepreload" crossorigin href="./assets/file-icons-CODNoWOy.js">
+    <link rel="modulepreload" crossorigin href="./assets/events-90X9nql5.js">
+    <link rel="modulepreload" crossorigin href="./assets/share-852X_cqy.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-BNTWOaI9.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-Tp7rARFe.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-C-qh_et5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_baseSet-CsW0tABf.js">
+    <link rel="modulepreload" crossorigin href="./assets/state-CsGOoEZv.js">
+    <link rel="modulepreload" crossorigin href="./assets/label-CqjrpwRC.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-W6ZZMHnc.js">
+    <link rel="modulepreload" crossorigin href="./assets/textarea-DtCcemo9.js">
+    <link rel="modulepreload" crossorigin href="./assets/refresh-ccw-sLaKP2vj.js">
+    <link rel="modulepreload" crossorigin href="./assets/form-BYlqbYKI.js">
+    <link rel="modulepreload" crossorigin href="./assets/renderShortcut-Bl8_FVn8.js">
+    <link rel="modulepreload" crossorigin href="./assets/useBoolean-CFj86iac.js">
+    <link rel="modulepreload" crossorigin href="./assets/useDeepCompareMemoize-CSMoa-ga.js">
+    <link rel="modulepreload" crossorigin href="./assets/types-jdbI9Q8O.js">
+    <link rel="modulepreload" crossorigin href="./assets/semaphore-C-Nli4KG.js">
+    <link rel="modulepreload" crossorigin href="./assets/fileToBase64-hLJmVjNJ.js">
+    <link rel="modulepreload" crossorigin href="./assets/pathUtils-icFgkNy9.js">
+    <link rel="modulepreload" crossorigin href="./assets/prop-types-C638SUfx.js">
+    <link rel="modulepreload" crossorigin href="./assets/es-gYgfF8y5.js">
+    <link rel="modulepreload" crossorigin href="./assets/_hasPath-hMc_3QZy.js">
+    <link rel="modulepreload" crossorigin href="./assets/hasIn-CSsM95b1.js">
+    <link rel="modulepreload" crossorigin href="./assets/flatten-Bd5tsfm_.js">
+    <link rel="modulepreload" crossorigin href="./assets/pick-D1xb4gl6.js">
+    <link rel="modulepreload" crossorigin href="./assets/code-xml-aSiY8T7C.js">
+    <link rel="modulepreload" crossorigin href="./assets/globe-Dwo3iXzC.js">
+    <link rel="modulepreload" crossorigin href="./assets/house-DS0r7dNZ.js">
+    <link rel="modulepreload" crossorigin href="./assets/square-DFICx2Qv.js">
+    <link rel="modulepreload" crossorigin href="./assets/triangle-alert-BL4YVsPy.js">
+    <link rel="modulepreload" crossorigin href="./assets/bundle.esm-D0TWQ6iT.js">
+    <link rel="stylesheet" crossorigin href="./assets/cells-BVzo2MHf.css">
+    <link rel="stylesheet" crossorigin href="./assets/markdown-renderer-DdDKmWlR.css">
+    <link rel="stylesheet" crossorigin href="./assets/JsonOutput-BQtz7-np.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-8Nlyq3mV.css">
   <marimo-wasm hidden=""></marimo-wasm>
     <script>
         if (window.location.protocol === 'file:') {
@@ -76,8 +267,40 @@
             display: none !important;
         }
     </style>
-    <marimo-code hidden="" data-show-code="false">import%20marimo%0A%0A__generated_with%20%3D%20%220.10.19%22%0Aapp%20%3D%20marimo.App()%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%22%22%0A%20%20%20%20%23%23%20Marimo%20for%20Datasette%0A%0A%20%20%20%20This%20notebook%20runs%20completely%20in%20the%20frontend%20via%20WASM.%20That%20means%20that%3A%0A%0A%20%20%20%20-%20you%20do%20not%20have%20to%20install%20anything%20in%20order%20to%20run%20Python%20code%20against%20any%20data%20that%20lives%20in%20your%20datasette%20instance%20%0A%20%20%20%20-%20all%20written%20code%20is%20lost%20when%20you%20refresh%20the%20page%2C%20so%20make%20sure%20you%20export%20any%20milestones%20that%20are%20valuable%0A%0A%20%20%20%20%23%23%20Utilities%0A%0A%20%20%20%20This%20notebooks%20also%20features%20a%20%60Datasette%60%20utility%20class%20that%20makes%20it%20easy%20to%20fetch%20data.%20The%20following%20methods%20are%20relevant%3A%20%0A%0A%20%20%20%20%60%60%60python%0A%20%20%20%20%23%20Automatically%20connect%20to%20the%20current%20datasette%20instance%0A%20%20%20%20ds%20%3D%20Datasette()%0A%0A%20%20%20%20%23%20Show%20all%20databases%20in%20datasette%0A%20%20%20%20ds.databases%0A%0A%20%20%20%20%23%20Show%20all%20datables%20in%20a%20database%20in%20datasette%0A%20%20%20%20ds.tables(database%3D)%0A%0A%20%20%20%20%23%20Get%20a%20table%20as%20a%20polars%20dataframe%20(uses%20the%20JSON%20api)%0A%20%20%20%20ds.get_polars(database%3D%2C%20table%3D)%0A%0A%20%20%20%20%23%20Use%20SQL%20to%20get%20the%20data%20in%20the%20right%20polars%20format%0A%20%20%20%20ds.sql_polars(database%3D%2C%20sql%3D)%0A%20%20%20%20%60%60%60%0A%0A%20%20%20%20In%20theory%20you%20could%20also%20re-use%20the%20same%20class%20to%20connect%20to%20another%20datasette%20instance%20that%20is%20hosted%20elsewhere.%20%0A%0A%20%20%20%20%60%60%60python%0A%20%20%20%20ds%20%3D%20Datasette(url%3D)%0A%20%20%20%20%60%60%60%0A%0A%20%20%20%20To%20learn%20more%20about%20Marimo%2C%20feel%20free%20to%20explore%20the%20%5Bdocs%5D(https%3A%2F%2Fdocs.marimo.io%2Fgetting_started%2Fkey_concepts%2F).%20%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(Datasette)%3A%0A%20%20%20%20ds%20%3D%20Datasette()%0A%20%20%20%20ds.databases%0A%20%20%20%20return%20(ds%2C)%0A%0A%0A%40app.cell%0Adef%20_()%3A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20requests%20as%20rq%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20from%20yarl%20import%20URL%0A%20%20%20%20import%20polars%20as%20pl%0A%20%20%20%20import%20json%0A%20%20%20%20from%20functools%20import%20cached_property%2C%20lru_cache%0A%0A%0A%20%20%20%20class%20Datasette%3A%0A%20%20%20%20%20%20%20%20def%20__init__(self%2C%20url%3DNone)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20self.url%20%3D%20url%20if%20url%20else%20marimo_host()%0A%0A%20%20%20%20%20%20%20%20%40cached_property%0A%20%20%20%20%20%20%20%20def%20databases(self)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20resp%20%3D%20rq.get(f%22%7Bself.url%7D%2F-%2Fdatabases.json%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B_%5B%22name%22%5D%20for%20_%20in%20resp.json()%5D%0A%0A%20%20%20%20%20%20%20%20%40lru_cache%0A%20%20%20%20%20%20%20%20def%20tables(self%2C%20database)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20database%20not%20in%20self.databases%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValueError(f%22%7Bdatabase%7D%20does%20not%20exist%2C%20options%20are%3A%20%7Bself.databases%7D%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20resp%20%3D%20rq.get(f%22%7Bself.url%7D%2F%7Bdatabase%7D.json%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B_%5B%22name%22%5D%20for%20_%20in%20resp.json()%5B%22tables%22%5D%5D%0A%0A%20%20%20%20%20%20%20%20def%20get_polars(self%2C%20database%2C%20table)%3A%20%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20self.sql_polars(database%2C%20sql%3Df%22select%20*%20from%20%7Btable%7D%22)%0A%0A%20%20%20%20%20%20%20%20def%20sql_polars(self%2C%20database%2C%20sql)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20url%20%3D%20(URL(self.url)%20%2F%20%22sqlite.json%22).with_query(sql%3Dsql%2C%20_shape%3D%22array%22%2C%20_nl%3D%22on%22%2C%20_size%3D%22max%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20pl.DataFrame(%5Bjson.loads(_)%20for%20_%20in%20rq.get(f%22%7Burl%7D%22).text.split(%22%5Cn%22)%5D)%0A%0A%0A%20%20%20%20def%20marimo_host()%3A%20%0A%20%20%20%20%20%20%20%20url%20%3D%20URL(str(mo.notebook_location()))%0A%20%20%20%20%20%20%20%20return%20f%22%7Burl.scheme%7D%3A%2F%2F%7Burl.authority%7D%22%0A%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20Datasette%2C%0A%20%20%20%20%20%20%20%20URL%2C%0A%20%20%20%20%20%20%20%20cached_property%2C%0A%20%20%20%20%20%20%20%20json%2C%0A%20%20%20%20%20%20%20%20lru_cache%2C%0A%20%20%20%20%20%20%20%20marimo_host%2C%0A%20%20%20%20%20%20%20%20mo%2C%0A%20%20%20%20%20%20%20%20pl%2C%0A%20%20%20%20%20%20%20%20rq%2C%0A%20%20%20%20)%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
+    
+<script data-marimo="true">
+    Object.defineProperty(window, "__MARIMO_EXPORT_CONTEXT__", {
+        value: Object.freeze({
+            trusted: true,
+            notebookCode: "# /// script\n# requires-python = \"\u003E=3.10\"\n# dependencies = [\n#     \"marimo\",\n#     \"moutils\",\n#     \"httpx\",\n#     \"pyodide-httpx\",\n#     \"polars==1.22.0\",\n#     \"requests==2.32.3\",\n#     \"yarl==1.18.3\",\n# ]\n# ///\n\nimport marimo\n\n__generated_with = \"0.23.16\"\napp = marimo.App()\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(\"\"\"\n    # marimo \u00d7 datasette\n\n    This notebook runs entirely in your browser and is already connected to the\n    datasette instance that served it. Pick a database and table below \u2014 the\n    query updates live. Edit any cell to go further. (Refresh loses your work,\n    so export anything worth keeping.)\n    \"\"\")\n    return\n\n\n@app.cell(hide_code=True)\ndef _():\n    # Patch httpx so it can make HTTP requests inside the browser (Pyodide/WASM).\n    # In a normal Python process httpx already works, so the patch is a no-op there.\n    try:\n        from pyodide_httpx import patch_httpx\n\n        patch_httpx()\n    except ImportError:\n        pass\n\n    import json\n    from functools import cached_property, lru_cache\n\n    import marimo as mo\n    import polars as pl\n    import requests as rq\n    from yarl import URL\n\n    from moutils.db.datasette import DatasetteConnection, databases\n\n    def marimo_host():\n        \"\"\"Base URL of the datasette instance that is hosting this notebook.\"\"\"\n        loc = URL(str(mo.notebook_location()))\n        return f\"{loc.scheme}://{loc.authority}\"\n\n    return (\n        DatasetteConnection,\n        URL,\n        cached_property,\n        databases,\n        json,\n        lru_cache,\n        marimo_host,\n        mo,\n        pl,\n        rq,\n    )\n\n\n@app.cell(hide_code=True)\ndef _(databases, marimo_host, mo):\n    base_url = marimo_host()\n    _db_names = databases(base_url)\n    _default_db = mo.query_params().get(\"database\")\n    database = mo.ui.dropdown(\n        options=_db_names,\n        value=_default_db if _default_db in _db_names else _db_names[0],\n        label=\"Database\",\n    )\n    return base_url, database\n\n\n@app.cell(hide_code=True)\ndef _(DatasetteConnection, base_url, database):\n    # A moutils DatasetteConnection is a native marimo SQL connection, so it also\n    # shows up in the data-sources panel on the left.\n    conn = DatasetteConnection(base_url, database.value)\n    return (conn,)\n\n\n@app.cell(hide_code=True)\ndef _(conn, mo):\n    _tables = sorted({row[\"table\"] for row in conn.schema_rows()})\n    _default_table = mo.query_params().get(\"table\")\n    table = mo.ui.dropdown(\n        options=_tables,\n        value=_default_table if _default_table in _tables else (_tables[0] if _tables else None),\n        label=\"Table\",\n    )\n    return (table,)\n\n\n@app.cell(hide_code=True)\ndef _(database, mo, table):\n    mo.hstack([database, table], justify=\"start\", gap=1)\n    return\n\n\n@app.cell\ndef _(conn, mo, table):\n    result = mo.sql(\n        f'select * from \"{table.value}\" limit 100',\n        engine=conn,\n    )\n    return\n\n\n@app.cell(hide_code=True)\ndef _(mo):\n    mo.md(r\"\"\"\n    ---\n    The older `Datasette` helper (`get_polars` / `sql_polars`) is still bundled\n    for backwards compatibility \u2014 the code is folded away below.\n    \"\"\")\n    return\n\n\n@app.cell(hide_code=True)\ndef _(URL, cached_property, json, lru_cache, marimo_host, pl, rq):\n    class Datasette:\n        def __init__(self, url=None):\n            self.url = url if url else marimo_host()\n\n        @cached_property\n        def databases(self):\n            resp = rq.get(f\"{self.url}/-/databases.json\")\n            return [_[\"name\"] for _ in resp.json()]\n\n        @lru_cache\n        def tables(self, database):\n            if database not in self.databases:\n                raise ValueError(f\"{database} does not exist, options are: {self.databases}\")\n            resp = rq.get(f\"{self.url}/{database}.json\")\n            return [_[\"name\"] for _ in resp.json()[\"tables\"]]\n\n        def get_polars(self, database, table):\n            return self.sql_polars(database, sql=f\"select * from {table}\")\n\n        def sql_polars(self, database, sql):\n            url = (URL(self.url) / f\"{database}.json\").with_query(sql=sql, _shape=\"array\", _nl=\"on\", _size=\"max\")\n            return pl.DataFrame([json.loads(_) for _ in rq.get(f\"{url}\").text.split(\"\\n\")])\n\n    return\n\n\nif __name__ == \"__main__\":\n    app.run()\n",
+        }),
+        writable: false,
+        configurable: false,
+    });
+</script>
+<marimo-code hidden="">%23%20%2F%2F%2F%20script%0A%23%20requires-python%20%3D%20%22%3E%3D3.10%22%0A%23%20dependencies%20%3D%20%5B%0A%23%20%20%20%20%20%22marimo%22%2C%0A%23%20%20%20%20%20%22moutils%22%2C%0A%23%20%20%20%20%20%22httpx%22%2C%0A%23%20%20%20%20%20%22pyodide-httpx%22%2C%0A%23%20%20%20%20%20%22polars%3D%3D1.22.0%22%2C%0A%23%20%20%20%20%20%22requests%3D%3D2.32.3%22%2C%0A%23%20%20%20%20%20%22yarl%3D%3D1.18.3%22%2C%0A%23%20%5D%0A%23%20%2F%2F%2F%0A%0Aimport%20marimo%0A%0A__generated_with%20%3D%20%220.23.16%22%0Aapp%20%3D%20marimo.App()%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(%22%22%22%0A%20%20%20%20%23%20marimo%20%C3%97%20datasette%0A%0A%20%20%20%20This%20notebook%20runs%20entirely%20in%20your%20browser%20and%20is%20already%20connected%20to%20the%0A%20%20%20%20datasette%20instance%20that%20served%20it.%20Pick%20a%20database%20and%20table%20below%20%E2%80%94%20the%0A%20%20%20%20query%20updates%20live.%20Edit%20any%20cell%20to%20go%20further.%20(Refresh%20loses%20your%20work%2C%0A%20%20%20%20so%20export%20anything%20worth%20keeping.)%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_()%3A%0A%20%20%20%20%23%20Patch%20httpx%20so%20it%20can%20make%20HTTP%20requests%20inside%20the%20browser%20(Pyodide%2FWASM).%0A%20%20%20%20%23%20In%20a%20normal%20Python%20process%20httpx%20already%20works%2C%20so%20the%20patch%20is%20a%20no-op%20there.%0A%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20from%20pyodide_httpx%20import%20patch_httpx%0A%0A%20%20%20%20%20%20%20%20patch_httpx()%0A%20%20%20%20except%20ImportError%3A%0A%20%20%20%20%20%20%20%20pass%0A%0A%20%20%20%20import%20json%0A%20%20%20%20from%20functools%20import%20cached_property%2C%20lru_cache%0A%0A%20%20%20%20import%20marimo%20as%20mo%0A%20%20%20%20import%20polars%20as%20pl%0A%20%20%20%20import%20requests%20as%20rq%0A%20%20%20%20from%20yarl%20import%20URL%0A%0A%20%20%20%20from%20moutils.db.datasette%20import%20DatasetteConnection%2C%20databases%0A%0A%20%20%20%20def%20marimo_host()%3A%0A%20%20%20%20%20%20%20%20%22%22%22Base%20URL%20of%20the%20datasette%20instance%20that%20is%20hosting%20this%20notebook.%22%22%22%0A%20%20%20%20%20%20%20%20loc%20%3D%20URL(str(mo.notebook_location()))%0A%20%20%20%20%20%20%20%20return%20f%22%7Bloc.scheme%7D%3A%2F%2F%7Bloc.authority%7D%22%0A%0A%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20DatasetteConnection%2C%0A%20%20%20%20%20%20%20%20URL%2C%0A%20%20%20%20%20%20%20%20cached_property%2C%0A%20%20%20%20%20%20%20%20databases%2C%0A%20%20%20%20%20%20%20%20json%2C%0A%20%20%20%20%20%20%20%20lru_cache%2C%0A%20%20%20%20%20%20%20%20marimo_host%2C%0A%20%20%20%20%20%20%20%20mo%2C%0A%20%20%20%20%20%20%20%20pl%2C%0A%20%20%20%20%20%20%20%20rq%2C%0A%20%20%20%20)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(databases%2C%20marimo_host%2C%20mo)%3A%0A%20%20%20%20base_url%20%3D%20marimo_host()%0A%20%20%20%20_db_names%20%3D%20databases(base_url)%0A%20%20%20%20_default_db%20%3D%20mo.query_params().get(%22database%22)%0A%20%20%20%20database%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D_db_names%2C%0A%20%20%20%20%20%20%20%20value%3D_default_db%20if%20_default_db%20in%20_db_names%20else%20_db_names%5B0%5D%2C%0A%20%20%20%20%20%20%20%20label%3D%22Database%22%2C%0A%20%20%20%20)%0A%20%20%20%20return%20base_url%2C%20database%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(DatasetteConnection%2C%20base_url%2C%20database)%3A%0A%20%20%20%20%23%20A%20moutils%20DatasetteConnection%20is%20a%20native%20marimo%20SQL%20connection%2C%20so%20it%20also%0A%20%20%20%20%23%20shows%20up%20in%20the%20data-sources%20panel%20on%20the%20left.%0A%20%20%20%20conn%20%3D%20DatasetteConnection(base_url%2C%20database.value)%0A%20%20%20%20return%20(conn%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(conn%2C%20mo)%3A%0A%20%20%20%20_tables%20%3D%20sorted(%7Brow%5B%22table%22%5D%20for%20row%20in%20conn.schema_rows()%7D)%0A%20%20%20%20_default_table%20%3D%20mo.query_params().get(%22table%22)%0A%20%20%20%20table%20%3D%20mo.ui.dropdown(%0A%20%20%20%20%20%20%20%20options%3D_tables%2C%0A%20%20%20%20%20%20%20%20value%3D_default_table%20if%20_default_table%20in%20_tables%20else%20(_tables%5B0%5D%20if%20_tables%20else%20None)%2C%0A%20%20%20%20%20%20%20%20label%3D%22Table%22%2C%0A%20%20%20%20)%0A%20%20%20%20return%20(table%2C)%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(database%2C%20mo%2C%20table)%3A%0A%20%20%20%20mo.hstack(%5Bdatabase%2C%20table%5D%2C%20justify%3D%22start%22%2C%20gap%3D1)%0A%20%20%20%20return%0A%0A%0A%40app.cell%0Adef%20_(conn%2C%20mo%2C%20table)%3A%0A%20%20%20%20result%20%3D%20mo.sql(%0A%20%20%20%20%20%20%20%20f'select%20*%20from%20%22%7Btable.value%7D%22%20limit%20100'%2C%0A%20%20%20%20%20%20%20%20engine%3Dconn%2C%0A%20%20%20%20)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(mo)%3A%0A%20%20%20%20mo.md(r%22%22%22%0A%20%20%20%20---%0A%20%20%20%20The%20older%20%60Datasette%60%20helper%20(%60get_polars%60%20%2F%20%60sql_polars%60)%20is%20still%20bundled%0A%20%20%20%20for%20backwards%20compatibility%20%E2%80%94%20the%20code%20is%20folded%20away%20below.%0A%20%20%20%20%22%22%22)%0A%20%20%20%20return%0A%0A%0A%40app.cell(hide_code%3DTrue)%0Adef%20_(URL%2C%20cached_property%2C%20json%2C%20lru_cache%2C%20marimo_host%2C%20pl%2C%20rq)%3A%0A%20%20%20%20class%20Datasette%3A%0A%20%20%20%20%20%20%20%20def%20__init__(self%2C%20url%3DNone)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20self.url%20%3D%20url%20if%20url%20else%20marimo_host()%0A%0A%20%20%20%20%20%20%20%20%40cached_property%0A%20%20%20%20%20%20%20%20def%20databases(self)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20resp%20%3D%20rq.get(f%22%7Bself.url%7D%2F-%2Fdatabases.json%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B_%5B%22name%22%5D%20for%20_%20in%20resp.json()%5D%0A%0A%20%20%20%20%20%20%20%20%40lru_cache%0A%20%20%20%20%20%20%20%20def%20tables(self%2C%20database)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20database%20not%20in%20self.databases%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValueError(f%22%7Bdatabase%7D%20does%20not%20exist%2C%20options%20are%3A%20%7Bself.databases%7D%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20resp%20%3D%20rq.get(f%22%7Bself.url%7D%2F%7Bdatabase%7D.json%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20%5B_%5B%22name%22%5D%20for%20_%20in%20resp.json()%5B%22tables%22%5D%5D%0A%0A%20%20%20%20%20%20%20%20def%20get_polars(self%2C%20database%2C%20table)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20self.sql_polars(database%2C%20sql%3Df%22select%20*%20from%20%7Btable%7D%22)%0A%0A%20%20%20%20%20%20%20%20def%20sql_polars(self%2C%20database%2C%20sql)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20url%20%3D%20(URL(self.url)%20%2F%20f%22%7Bdatabase%7D.json%22).with_query(sql%3Dsql%2C%20_shape%3D%22array%22%2C%20_nl%3D%22on%22%2C%20_size%3D%22max%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20pl.DataFrame(%5Bjson.loads(_)%20for%20_%20in%20rq.get(f%22%7Burl%7D%22).text.split(%22%5Cn%22)%5D)%0A%0A%20%20%20%20return%0A%0A%0Aif%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20%20%20app.run()%0A</marimo-code></head>
   <body>
     <div id="root"></div>
+    <script data-marimo="true">
+      Object.defineProperty(window, "__MARIMO_MOUNT_CONFIG__", {
+        value: Object.freeze({
+            "filename": "notebook.py",
+            "cwd": "",
+            "lspWorkspace": null,
+            "mode": "edit",
+            "version": "0.23.16",
+            "serverToken": "unused",
+            "config": {"ai": {"custom_providers": {}, "enabled": true, "models": {"custom_models": [], "displayed_models": []}}, "completion": {"activate_on_typing": true, "auto_close_pairs": true, "copilot": false, "signature_hint_on_typing": false}, "diagnostics": {"sql_linter": true}, "display": {"cell_output": "below", "code_editor_font_size": 14, "custom_css": [], "dataframes": "rich", "default_table_max_columns": 50, "default_table_page_size": 10, "default_width": "medium", "reference_highlighting": true, "theme": "light"}, "formatting": {"line_length": 79}, "keymap": {"overrides": {}, "preset": "default"}, "language_servers": {"pylsp": {"enable_flake8": false, "enable_mypy": true, "enable_pydocstyle": false, "enable_pyflakes": false, "enable_pylint": false, "enable_ruff": true, "enabled": false}}, "mcp": {"mcpServers": {}, "presets": []}, "package_management": {"manager": "uv"}, "runtime": {"auto_instantiate": false, "auto_reload": "off", "default_csv_encoding": "utf-8", "default_sql_output": "auto", "on_cell_change": "autorun", "output_max_bytes": 8000000, "reactive_tests": true, "show_tracebacks": false, "std_stream_max_bytes": 1000000, "watcher_on_save": "lazy"}, "save": {"autosave": "off", "autosave_delay": 1000, "format_on_save": false}, "server": {"browser": "default", "follow_symlink": false}, "snippets": {"custom_paths": [], "include_default_snippets": true}},
+            "configOverrides": {},
+            "appConfig": {"sql_output": "auto", "width": "compact"},
+            "view": {"showAppCode": false},
+            "notebook": null,
+            "session": null,
+            "runtimeConfig": null,
+        }),
+        writable: false,
+        configurable: false,
+      });
+    </script>
   </body>
 </html>

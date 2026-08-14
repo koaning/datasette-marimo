@@ -10,4 +10,5 @@ venv
 .vscode
 dist
 build
-sqlite.db
+# generated / scratch datasette databases (sqlite.db from `make db`, demo dbs)
+*.db
