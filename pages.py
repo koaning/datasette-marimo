@@ -1,3 +1,17 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "marimo",
+#     "moutils",
+#     "httpx",
+#     "pyodide-httpx",
+#     "altair",
+#     "polars==1.22.0",
+#     "requests==2.32.3",
+#     "yarl==1.18.3",
+# ]
+# ///
+
 import marimo
 
 __generated_with = "0.10.19"
@@ -8,104 +22,139 @@ app = marimo.App()
 def _(mo):
     mo.md(
         """
-        # datasette-marimo 
+        # datasette-marimo
 
-        This page gives an impression of what it could be like to use Marimo from datasette. Right now it just points to a public instance, but you can ship the same experience from within datasette. 
+        This page gives an impression of what it could be like to use Marimo from datasette. Right now it just points to a public instance ([datasette.exe.xyz](https://datasette.exe.xyz)), but you can ship the same experience from within datasette.
 
-        ## Explore the mini-API
+        ## Connect via a marimo SQL connection
 
-        You can connect to an instance by using the `Datasette` class. This is provided by the notebook.
+        We connect to a datasette instance with
+        [moutils](https://github.com/marimo-team/moutils)'
+        `DatasetteConnection`. It is a first-class marimo SQL connection, so the
+        `conn` object shows up in the data-sources panel and you can run **native
+        SQL cells** against it.
         """
     )
     return
 
 
 @app.cell
-def _(Datasette):
-    datasette = Datasette("https://calmcode-datasette.fly.dev")
-    return (datasette,)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""Just to mention a few helpers, we've got this one that allows you to fetch all the databases attached to the datasette instance.""")
-    return
-
-
-@app.cell
-def _(datasette):
-    datasette.databases
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""Given a database, you can also check for all the available tables.""")
-    return
-
-
-@app.cell
-def _(datasette):
-    datasette.tables(database="calmcode")
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""Spot a table you want to investigate? You can run SQL against it!""")
-    return
-
-
-@app.cell
-def _(datasette):
-    datasette.sql_polars(database="calmcode", sql="select * from chickweight LIMIT 5;")
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""There is also a helper method to pull in the entire table. Just be aware that this can get slow because we don't access the SQlite database directly. All the data is pulled in via the JSON api.""")
-    return
-
-
-@app.cell
-def _(datasette):
-    df_chickweight = datasette.get_polars(database="calmcode", table="chickweight")
-    return (df_chickweight,)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""One nice thing about bringing the data into a polars dataframe is that you have access to Python again, so plotting is super easy and machine learning also suddenly becomes an option!""")
-    return
-
-
-@app.cell
-def _(df_chickweight, pl):
-    p1 = df_chickweight.plot.scatter("Time", "weight")
-    p2 = (
-        df_chickweight
-        .with_columns(diet=pl.col("Diet").cast(pl.String()))
-        .group_by("diet", "Time")
-        .mean()
-        .plot.line("Time", "weight", color="diet")
-    )
-    p1 + p2
-    return p1, p2
-
-
-@app.cell(hide_code=True)
 def _():
-    import altair 
-    import marimo as mo
-    import requests as rq
-    import marimo as mo
-    from yarl import URL
-    import polars as pl
+    # Patch httpx so it can make HTTP requests inside the browser (Pyodide/WASM).
+    # In a normal Python process httpx already works, so the patch is a no-op there.
+    try:
+        from pyodide_httpx import patch_httpx
+
+        patch_httpx()
+    except ImportError:
+        pass
+
     import json
     from functools import cached_property, lru_cache
 
+    import marimo as mo
+    import polars as pl
+    import requests as rq
+    from yarl import URL
 
+    from moutils.db.datasette import DatasetteConnection, databases
+
+    return (
+        DatasetteConnection,
+        URL,
+        cached_property,
+        databases,
+        json,
+        lru_cache,
+        mo,
+        pl,
+        rq,
+    )
+
+
+@app.cell
+def _(DatasetteConnection):
+    conn = DatasetteConnection("https://datasette.exe.xyz", "sleep_and_gpa")
+    conn
+    return (conn,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""You can list the databases attached to the instance.""")
+    return
+
+
+@app.cell
+def _(conn):
+    conn.databases()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""And you can browse the tables and columns the connection exposes.""")
+    return
+
+
+@app.cell
+def _(conn):
+    conn.schema_rows()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Spot a table you want to investigate? Run SQL against it — this is a native marimo SQL cell using `conn` as the engine.""")
+    return
+
+
+@app.cell
+def _(conn, mo):
+    _preview = mo.sql(
+        "select * from students limit 5",
+        engine=conn,
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""Pull the table into a dataframe and you get Python back, so plotting and machine learning become easy. Here we look at how average sleep relates to term GPA.""")
+    return
+
+
+@app.cell
+def _(conn, mo):
+    df_students = mo.sql(
+        "select avg_sleep_hours, term_gpa, gender from students",
+        engine=conn,
+    )
+    return (df_students,)
+
+
+@app.cell
+def _(df_students):
+    df_students.plot.scatter("avg_sleep_hours", "term_gpa", color="gender")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""
+        ## Legacy helper (still supported)
+
+        The older `Datasette` helper class that fetched data through the JSON API
+        still works, so existing `get_polars` / `sql_polars` code keeps running.
+        The `DatasetteConnection` above is the recommended path.
+        """
+    )
+    return
+
+
+@app.cell
+def _(URL, cached_property, json, lru_cache, mo, pl, rq):
     class Datasette:
         def __init__(self, url=None):
             self.url = url if url else marimo_host()
@@ -122,34 +171,18 @@ def _():
             resp = rq.get(f"{self.url}/{database}.json")
             return [_["name"] for _ in resp.json()["tables"]]
 
-        def get_polars(self, database, table): 
+        def get_polars(self, database, table):
             return self.sql_polars(database, sql=f"select * from {table}")
 
         def sql_polars(self, database, sql):
             url = (URL(self.url) / f"{database}.json").with_query(sql=sql, _shape="array", _nl="on", _size="max")
             return pl.DataFrame([json.loads(_) for _ in rq.get(f"{url}").text.split("\n")])
 
-
-    def marimo_host(): 
+    def marimo_host():
         url = URL(str(mo.notebook_location()))
         return f"{url.scheme}://{url.authority}"
-    return (
-        Datasette,
-        URL,
-        altair,
-        cached_property,
-        json,
-        lru_cache,
-        marimo_host,
-        mo,
-        pl,
-        rq,
-    )
 
-
-@app.cell
-def _():
-    return
+    return (Datasette,)
 
 
 if __name__ == "__main__":

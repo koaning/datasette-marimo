@@ -1,0 +1,1 @@
+import{t as e}from"./objects-BlG0ZrO0.js";function n(t){if(typeof t=="object"&&t){if("width"in t)return t.width;if("spec"in t)return n(t.spec)}}function r(t){return!t||Object.keys(t).length===0?"auto":e.mapValues(t,i=>i==="date"||i==="time"?"string":i==="datetime"?"date":i)}export{r as n,n as t};

@@ -1,6 +1,6 @@
 [project]
 name = "datasette-marimo"
-version = "0.1.4"
+version = "0.2.0"
 description = "Marimo attached to your datasette"
 readme = "README.md"
 authors = [{name = "Vincent D. Warmerdam"}]
@@ -10,8 +10,11 @@ classifiers=[
     "License :: OSI Approved :: Apache Software License"
 ]
 requires-python = ">=3.9"
+# The server plugin only imports `datasette`. Everything the notebook needs
+# (marimo, moutils, httpx, polars, ...) is declared in the notebooks' inline
+# script metadata and installed in the browser by the WASM runtime.
 dependencies = [
-    "datasette>=1.0a16", "marimo", "yarl", "polars", "requests"
+    "datasette>=1.0a16"
 ]
 
 

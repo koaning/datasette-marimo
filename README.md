@@ -19,19 +19,22 @@ We host a [demo on Github pages](https://koaning.github.io/datasette-marimo/) th
 
 ## Usage
 
-When you run a datasette server, go to "/marimo" in the browser. From there you get Marimo running in WASM with some helper tools to grab data our of datasette. The benefit is that you can run all sorts of visualisation tools and machine learning on the data without having to install any software on your local machine.
+When you run a datasette server, open the top-right hamburger menu and click **"Open in marimo"** (or go to "/marimo" directly). From there you get Marimo running in WASM with a connection to your datasette instance. The benefit is that you can run all sorts of visualisation tools and machine learning on the data without having to install any software on your local machine.
 
 > There is one big downside: refresh the page and you loose progress. Make sure you download beforehand. 
 
-Note, when you open the notebook you'll spot helpers that ensure that Marimo connects to the same datasette instance that is hosting it. Here's what it roughly looks like:
+The "Open in marimo" menu link prefills the database (and table) of the page you clicked from, so the notebook lands ready to query it.
+
+Inside the notebook you connect through a [marimo SQL connection](https://docs.marimo.io/guides/working_with_data/sql/) provided by [moutils](https://github.com/marimo-team/moutils). The connection shows up in marimo's data-sources panel, so you can browse the schema and write **native SQL cells** against it:
 
 ```python
-# Fetch useful information about your datasette instance
-datasette = Datasette()
-datasette.databases                  # List of databases
-datasette.tables(database="sqlite")  # List of tables in a database
+from moutils.db.datasette import DatasetteConnection, databases
 
-# Two different methods to get your data as a Polars DataFrame
-df = datasette.get_polars(database="sqlite", table="chickweight")
-df = datasette.sql_polars(database="sqlite", sql="select * from chickweight")
+databases(base_url)                          # list databases on the instance
+conn = DatasetteConnection(base_url, "sqlite")  # connect to one database
+
+# then, in a SQL cell (or from Python):
+mo.sql("select * from chickweight limit 100", engine=conn)
 ```
+
+The older `Datasette` helper class (`get_polars` / `sql_polars`) is still shipped in the notebook for backwards compatibility, but `DatasetteConnection` is the recommended path.

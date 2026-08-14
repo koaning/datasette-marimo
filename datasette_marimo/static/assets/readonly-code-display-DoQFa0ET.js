@@ -1,0 +1,1 @@
+import{cr as a,lr as t}from"./cells-CJLUCcQg.js";var r=new t,e=new a;function d(o){let n=o.trim();return n?r.isSupported(n)?{code:r.transformIn(n).code,language:"markdown"}:e.isSupported(n)?{code:e.transformIn(n).code,language:"sql"}:{code:o,language:"python"}:{code:o,language:"python"}}export{d as t};
