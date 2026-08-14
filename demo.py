@@ -19,38 +19,20 @@ app = marimo.App()
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""
-    ## Marimo for Datasette
+    mo.md(
+        """
+        # marimo × datasette
 
-    This notebook runs completely in the frontend via WASM. That means that:
-
-    - you do not have to install anything in order to run Python code against any data that lives in your datasette instance
-    - all written code is lost when you refresh the page, so make sure you export any milestones that are valuable
-
-    ## Talking to datasette
-
-    This notebook connects to the datasette instance that is hosting it through a
-    [marimo SQL connection](https://docs.marimo.io/guides/working_with_data/sql/)
-    provided by [moutils](https://github.com/marimo-team/moutils). The `conn`
-    object below shows up in marimo's data-sources panel, so you can browse the
-    schema and write **native SQL cells** against it:
-
-    ```python
-    from moutils.db.datasette import DatasetteConnection, databases
-
-    databases(base_url)                       # list databases on the instance
-    conn = DatasetteConnection(base_url, db)   # connect to one database
-    ```
-
-    Then create a SQL cell and pick `conn` as the engine, or run SQL from Python
-    with `mo.sql("select ...", engine=conn)`.
-
-    To learn more about Marimo, feel free to explore the [docs](https://docs.marimo.io/getting_started/key_concepts/).
-    """)
+        This notebook runs entirely in your browser and is already connected to the
+        datasette instance that served it. Pick a database and table below — the
+        query updates live. Edit any cell to go further. (Refresh loses your work,
+        so export anything worth keeping.)
+        """
+    )
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     # Patch httpx so it can make HTTP requests inside the browser (Pyodide/WASM).
     # In a normal Python process httpx already works, so the patch is a no-op there.
@@ -90,66 +72,67 @@ def _():
     )
 
 
-@app.cell
-def _(DatasetteConnection, databases, marimo_host, mo):
-    # Connect to the current instance. The "Open in marimo" menu link can prefill
-    # ?database=&table= so we land on the database you were just looking at.
+@app.cell(hide_code=True)
+def _(databases, marimo_host, mo):
     base_url = marimo_host()
-    params = mo.query_params()
-    db_names = databases(base_url)
-    database = params.get("database") or (db_names[0] if db_names else None)
-    conn = DatasetteConnection(base_url, database) if database else None
-    conn
-    return base_url, conn, database, db_names, params
+    _db_names = databases(base_url)
+    _default_db = mo.query_params().get("database")
+    database = mo.ui.dropdown(
+        options=_db_names,
+        value=_default_db if _default_db in _db_names else _db_names[0],
+        label="Database",
+    )
+    return base_url, database
 
 
 @app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""Pick a table below — the SQL cell that follows previews it. Swap in any SQL you like.""")
+def _(DatasetteConnection, base_url, database):
+    # A moutils DatasetteConnection is a native marimo SQL connection, so it also
+    # shows up in the data-sources panel on the left.
+    conn = DatasetteConnection(base_url, database.value)
+    return (conn,)
+
+
+@app.cell(hide_code=True)
+def _(conn, mo):
+    _tables = sorted({row["table"] for row in conn.schema_rows()})
+    _default_table = mo.query_params().get("table")
+    table = mo.ui.dropdown(
+        options=_tables,
+        value=_default_table if _default_table in _tables else (_tables[0] if _tables else None),
+        label="Table",
+    )
+    return (table,)
+
+
+@app.cell(hide_code=True)
+def _(database, mo, table):
+    mo.hstack([database, table], justify="start", gap=1)
     return
 
 
 @app.cell
-def _(conn, params):
-    tables = sorted({row["table"] for row in conn.schema_rows()}) if conn else []
-    table = params.get("table") or (tables[0] if tables else None)
-    tables
-    return table, tables
-
-
-@app.cell
 def _(conn, mo, table):
-    preview = mo.sql(
-        f'select * from "{table}" limit 100',
+    result = mo.sql(
+        f'select * from "{table.value}" limit 100',
         engine=conn,
     )
-    return (preview,)
+    return (result,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
         r"""
-        ## Legacy helper (still supported)
-
-        Before the moutils connection existed this notebook shipped a small
-        `Datasette` class that fetched data through the JSON API. It still works,
-        so any code that relied on `get_polars` / `sql_polars` keeps running — but
-        the `DatasetteConnection` above is the recommended path.
-
-        ```python
-        ds = Datasette()                       # connect to the current instance
-        ds.databases                           # list databases
-        ds.tables(database="sqlite")           # list tables
-        ds.get_polars(database="sqlite", table="chickweight")
-        ds.sql_polars(database="sqlite", sql="select * from chickweight")
-        ```
+        ---
+        The older `Datasette` helper (`get_polars` / `sql_polars`) is still bundled
+        for backwards compatibility — the code is folded away below.
         """
     )
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(URL, cached_property, json, lru_cache, marimo_host, pl, rq):
     class Datasette:
         def __init__(self, url=None):

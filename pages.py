@@ -38,7 +38,7 @@ def _(mo):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     # Patch httpx so it can make HTTP requests inside the browser (Pyodide/WASM).
     # In a normal Python process httpx already works, so the patch is a no-op there.
@@ -143,17 +143,16 @@ def _(df_students):
 def _(mo):
     mo.md(
         r"""
-        ## Legacy helper (still supported)
-
-        The older `Datasette` helper class that fetched data through the JSON API
-        still works, so existing `get_polars` / `sql_polars` code keeps running.
-        The `DatasetteConnection` above is the recommended path.
+        ---
+        The older `Datasette` helper (`get_polars` / `sql_polars`) is still bundled
+        for backwards compatibility — the code is folded away below. The
+        `DatasetteConnection` above is the recommended path.
         """
     )
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(URL, cached_property, json, lru_cache, mo, pl, rq):
     class Datasette:
         def __init__(self, url=None):
