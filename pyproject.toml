@@ -1,6 +1,6 @@
 [project]
 name = "datasette-marimo"
-version = "0.2.0"
+version = "0.2.1"
 description = "Marimo attached to your datasette"
 readme = "README.md"
 authors = [{name = "Vincent D. Warmerdam"}]
@@ -14,7 +14,7 @@ requires-python = ">=3.9"
 # (marimo, moutils, httpx, polars, ...) is declared in the notebooks' inline
 # script metadata and installed in the browser by the WASM runtime.
 dependencies = [
-    "datasette>=1.0a16"
+    "datasette>=0.64,<1"
 ]
 
 

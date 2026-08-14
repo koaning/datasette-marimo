@@ -8,6 +8,13 @@ Write every entry in Simplified Technical English. Apply the
 `simplified-technical-english` skill before you add or edit an entry. See
 [AGENTS.md](AGENTS.md) for the rule.
 
+## [0.2.1] - 2026-08-14
+
+### Changed
+
+- Change the Datasette requirement to `datasette>=0.64,<1`. The plugin now installs
+  on the Datasette 0.x line. Datasette 1.0 is still an alpha release.
+
 ## [0.2.0] - 2026-08-14
 
 ### Added
