@@ -36,7 +36,7 @@ CI = "https://github.com/koaning/datasette-marimo/actions"
 marimo = "datasette_marimo"
 
 [project.optional-dependencies]
-test = ["pytest", "pytest-asyncio"]
+test = ["pytest", "pytest-asyncio", "ruff"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "strict"
