@@ -15,7 +15,7 @@ datasette install datasette-marimo
 
 ## Demo
 
-The [demo on GitHub Pages](https://koaning.github.io/datasette-marimo/) shows the notebook experience on a Datasette server. The [YouTube tutorial](https://youtu.be/32X4OYAxAaQ) gives more details.
+The [demo on GitHub Pages](https://koaning.github.io/datasette-marimo/) shows the notebook experience on a Datasette server. 
 
 ## Usage
 
