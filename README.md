@@ -15,17 +15,19 @@ datasette install datasette-marimo
 
 ## Demo
 
-We host a [demo on Github pages](https://koaning.github.io/datasette-marimo/) that shows what the notebook experience could be like on a datasette server but we also have a [YouTube tutorial](https://youtu.be/32X4OYAxAaQ) that gives more details. 
+The [demo on GitHub Pages](https://koaning.github.io/datasette-marimo/) shows the notebook experience on a Datasette server. The [YouTube tutorial](https://youtu.be/32X4OYAxAaQ) gives more details.
 
 ## Usage
 
-When you run a datasette server, open the top-right hamburger menu and click **"Open in marimo"** (or go to "/marimo" directly). From there you get Marimo running in WASM with a connection to your datasette instance. The benefit is that you can run all sorts of visualisation tools and machine learning on the data without having to install any software on your local machine.
+Run a Datasette server. Open the top-right hamburger menu and click **Open in marimo**. You can also open `/marimo` directly.
 
-> There is one big downside: refresh the page and you loose progress. Make sure you download beforehand. 
+marimo then runs in WASM with a connection to your Datasette instance. You can run visualization and machine learning tools on the data. You do not install any software on your local machine.
 
-The "Open in marimo" menu link prefills the database (and table) of the page you clicked from, so the notebook lands ready to query it.
+> Warning: if you refresh the page, you lose your work. Export your work before you refresh.
 
-Inside the notebook you connect through a [marimo SQL connection](https://docs.marimo.io/guides/working_with_data/sql/) provided by [moutils](https://github.com/marimo-team/moutils). The connection shows up in marimo's data-sources panel, so you can browse the schema and write **native SQL cells** against it:
+The **Open in marimo** link reads the page you came from. It prefills the database and table, so the notebook opens ready to query that table.
+
+Inside the notebook you connect through a [marimo SQL connection](https://docs.marimo.io/guides/working_with_data/sql/) from [moutils](https://github.com/marimo-team/moutils). The connection appears in marimo's data-sources panel. You can browse the schema and write **native SQL cells** against it:
 
 ```python
 from moutils.db.datasette import DatasetteConnection, databases
@@ -37,4 +39,6 @@ conn = DatasetteConnection(base_url, "sqlite")  # connect to one database
 mo.sql("select * from chickweight limit 100", engine=conn)
 ```
 
-The older `Datasette` helper class (`get_polars` / `sql_polars`) is still shipped in the notebook for backwards compatibility, but `DatasetteConnection` is the recommended path.
+The moutils connection runs synchronous HTTP in the browser. It needs a browser with JSPI support, such as Chrome or Edge. On other browsers, use the legacy helper below.
+
+The notebook still includes the older `Datasette` helper class (`get_polars` / `sql_polars`) for backward compatibility. `DatasetteConnection` is the recommended path.
