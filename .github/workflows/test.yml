@@ -9,8 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        datasette-version: ["<1", ">=1.0a0"]
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -22,6 +24,9 @@ jobs:
     - name: Install dependencies
       run: |
         pip install '.[test]'
+    - name: Install Datasette ${{ matrix.datasette-version }}
+      run: |
+        pip install --pre "datasette${{ matrix.datasette-version }}"
     - name: Run tests
       run: |
         python -m pytest
