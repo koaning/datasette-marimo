@@ -8,6 +8,16 @@ Write every entry in Simplified Technical English. Apply the
 `simplified-technical-english` skill before you add or edit an entry. See
 [AGENTS.md](AGENTS.md) for the rule.
 
+## [0.2.2] - 2026-08-17
+
+### Changed
+
+- Change the Datasette requirement to `datasette>=0.64`. The plugin now installs on
+  both the Datasette 0.x line and the 1.0 line. To install on a 1.0 alpha, use
+  `pip install --pre`.
+- Add a Datasette version to the CI matrix. The tests now run against a 0.x release
+  and the newest 1.0 alpha. This step keeps both lines supported.
+
 ## [0.2.1] - 2026-08-14
 
 ### Changed

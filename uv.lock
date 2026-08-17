@@ -131,7 +131,7 @@ wheels = [
 
 [[package]]
 name = "datasette-marimo"
-version = "0.2.1"
+version = "0.2.2"
 source = { editable = "." }
 dependencies = [
     { name = "datasette" },
@@ -146,7 +146,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "datasette", specifier = ">=0.64,<1" },
+    { name = "datasette", specifier = ">=0.64" },
     { name = "pytest", marker = "extra == 'test'" },
     { name = "pytest-asyncio", marker = "extra == 'test'" },
     { name = "ruff", marker = "extra == 'test'" },
